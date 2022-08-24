@@ -1,0 +1,16 @@
+
+<h1>Agregar un nuevo aprendiz</h1>
+    <!--Segundo Tag de ciclo-->
+    <form action="{% url 'territorio:aprendiz-guardar' %}" method="post">
+        {% csrf_token %}
+        <label for="cedula">Cédula</label>
+        <input type="number" name="cedula"><br>
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre"><br>
+        <label for="apellido">Apellido</label>
+        <input type="text" name="apellido"><br>
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" name="fecha_nacimiento"><br>
+        <br><button type="submit">Agregar</button>
+    </form>
+      

@@ -1,0 +1,28 @@
+<h1>Actividades</h1>
+<a href="{% url 'territorio:actividades-add' %}">Agregar actividad</a>
+{% if datos %}
+<table border="1" width="100%">
+    <thead>
+        <th>ID</th>
+        <th>Monitoría</th>
+        <th>Actividad</th>
+        <th>Observaciones</th>
+        <th>Fecha</th>
+    </thead>
+    <tbody>
+        {% for re in datos %}
+        <tr>
+            <td>{{ re.id }}</td>
+            <td>{{ re.monitoria }}</td>
+            <td>{{ re.actividad }}</td>
+            <td>{{ re.observaciones }}</td>
+            <td>{{ re.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>    
+
+{% else %}
+    <h1>No hay datos</h1>
+{% endif %}

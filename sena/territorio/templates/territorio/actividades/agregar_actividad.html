@@ -1,0 +1,21 @@
+<h1>Agregar una nueva actividad</h1>
+
+<form action="{% url 'territorio:actividades-guardar' %}" method="post">
+    {% csrf_token %}
+        <label for="monitoria">Monitoría</label>
+        <select name="monitoria">
+            <option value="0">Monitoría</option>
+        {% for m in monitorias %}
+            <option value="{{m.id}}">{{m.cat}}</option>
+        {% endfor %}
+        </select><br>
+        <br><label for="actividad">Actividad</label>
+        <input type="text" name="actividad"><br>
+        <br><label for="observaciones">observaciones</label>
+        <input type="text" name="observaciones"><br>
+        <!--<textarea name="observaciones" cols="20" rows="3"></textarea>-->
+        <label for="fecha">Fecha</label>
+        <input type="date" name="fecha"><br>
+        <br><button type="submit">Agregar</button>
+
+</form>

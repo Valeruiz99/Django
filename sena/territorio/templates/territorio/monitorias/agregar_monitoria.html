@@ -1,0 +1,20 @@
+<h1>Agregar una nueva monitoría</h1>
+
+<form action="{% url 'territorio:monitorias-guardar' %}" method="post">
+    {% csrf_token %}
+        <label for="cat">Categoría</label>
+        <input type="text" name="cat"><br>
+        <label for="aprendiz">Aprendiz</label>
+        <select name="aprendiz">
+            <option value="0">Aprendiz</option>
+        {% for a in aprendiz %}
+            <option value="{{a.id}}">{{a.nombre}}</option>
+        {% endfor %}
+        </select><br>
+        <br><label for="fechaInicio">Fecha de inicio</label>
+        <input type="datetime-local" name="fechaInicio"><br>
+        <label for="fechaFinal">Fecha final</label>
+        <input type="datetime-local" name="fechaFinal"><br>
+        <br><button type="submit">Agregar</button>
+
+</form>

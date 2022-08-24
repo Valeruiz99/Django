@@ -1,0 +1,28 @@
+<h1>Monitorías</h1>
+<a href="{% url 'territorio:monitorias-add' %}">Agregar monitoría</a>
+{% if datos %}
+<table border="1" width="100%">
+    <thead>
+        <th>ID</th>
+        <th>Categoría</th>
+        <th>Aprendiz</th>
+        <th>Fecha de inicio</th>
+        <th>Fecha fin</th>
+    </thead>
+    <tbody>
+        {% for result in datos %}
+        <tr>
+            <td>{{ result.id }}</td>
+            <td>{{ result.cat }}</td>
+            <td>{{ result.aprendiz }}</td>
+            <td>{{ result.fechaInicio }}</td>
+            <td>{{ result.fechaFinal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>    
+
+{% else %}
+    <h1>No hay datos</h1>
+{% endif %}
