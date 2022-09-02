@@ -1,29 +1,70 @@
-<h1>Aprendices</h1>
+{% extends "territorio/base.html" %}
+{% block body %}
+
 <!--Aquí solamente podemos utilizar las funcionalidades del models-->
-<a href="{% url 'territorio:aprendiz-add' %}">Agregar aprendiz</a><!--Para los hipervínculos solamente ponemos una llave {}-->
-{% if datos %}<!--Se hace unn condicional, si vienen datos, hacemos tal cosa, se deben finalizar los condicionales-->
-    <!--Primer Tag de ciclo-->
-    <table border="1" width="100%">
-        <thead>
-            <th>ID</th>
-            <th>Cédula</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Fecha de nacimiento</th>
-        </thead>
-        <tbody>
-            {% for r in datos %}
-            <tr>
-                <td>{{ r.id }}</td>
-                <td>{{ r.cedula }}</td>
-                <td>{{ r.nombre }}</td>
-                <td>{{ r.apellido }}</td>
-                <td>{{ r.fecha_nacimiento }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    
-    </table>    
+<!--<a href="{% url 'territorio:aprendiz-add' %}">Agregar aprendiz</a>Para los hipervínculos solamente ponemos una llave {}-->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{% if message.tags != 'error' %}{{ message.tags }}{% elif message.tags == 'error' %}danger{% endif %}"
+role="alert">{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<!--Se hace unn condicional, si vienen datos, hacemos tal cosa, se deben finalizar los condicionales-->
+<!--Primer Tag de ciclo-->
+<h1>Aprendices</h1>
+
+{% if page_obj %}
+
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+            <a class="page-link" {% if page_obj.has_previous %} href="?page={{ page_obj.previous_page_number }}" {% endif %}>Anterior</a>            
+        </li>
+
+        {% for i in "x"|rjust:page_obj.paginator.num_pages|make_list %}
+            <li class="page-item {% if forloop.counter == page_obj.number %}active{% endif %}" aria-current="page">
+                <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+            <a class="page-link" {% if page_obj.has_next %}href="?page={{ page_obj.next_page_number }}"{% endif %}>Siguiente</a>
+        </li>
+    </ul>
+</nav>
+
+<table class="table table-striped container my-3" id="liAprendiz">
+    <thead>
+        <th>#</th>
+        <th>ID</th>
+        <th>Cédula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Fecha de nacimiento</th>
+        <th colspan="2">Acciones</th>
+    </thead>
+    <tbody>
+        {% for registro in page_obj %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ registro.id }}</td>
+            <td>{{ registro.cedula }}</td>
+            <td>{{ registro.nombre }}</td>
+            <td>{{ registro.apellido }}</td>
+            <td>{{ registro.fecha_nacimiento }}</td>
+            <td>
+            <td><a class="btn btn-warning" href="{% url 'territorio:aprendiz-editar' registro.id %}">Editar</a></td>
+            </td>
+            <td><a class="btn btn-danger" onclick="confirmacion('{% url 'territorio:aprendiz-eliminar' registro.id %}');" >Eliminar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
 {% else %}
-    <h1>No hay datos</h1>
-{% endif %}<!--Cierre de condicional-->
+<h1>No hay datos</h1>
+{% endif %}
+<!--Cierre de condicional-->
+
+{% endblock %}

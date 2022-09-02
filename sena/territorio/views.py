@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from pyexpat.errors import messages
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect #Este es para imprimir pero en el navegador, del paquete django, del módulo http importamos
 #El HttpResponseRedirect, me redirige a otra ruta
 from .models import Aprendiz, Monitorias, Actividades
 from django.urls import reverse
-
+from django.db import IntegrityError
+from django.contrib import messages
+from django.core.paginator import Paginator
 # Ya mostramos vistas en el navegador
 
 def index(request):
@@ -11,7 +14,12 @@ def index(request):
 
 def listarAprendiz(request):
     q = Aprendiz.objects.all()
-    contexto = {'datos': q }#Esta es la variable que se utiliza al final de el render
+    pag = Paginator(q, 4) #Número de registros que quiero por página
+    page_number = request.GET.get('page')
+    #Sobreescribimos el query
+    q = pag.get_page(page_number)
+
+    contexto = {'page_obj': q }#Esta es la variable que se utiliza al final de el render
     return render(request, 'territorio/aprendiz/listar_aprendiz.html', contexto)
 
 def insertarAprendiz(request):
@@ -31,6 +39,44 @@ def guardarAprendiz(request):
     except Exception as e:
         return HttpResponse("Error" + str(e))
 
+def eliminarAprendiz(request, id):
+    try:
+        a = Aprendiz.objects.get(pk = id)
+        a.delete()
+        return HttpResponseRedirect(reverse('territorio:aprendiz'))
+    except Aprendiz.DoesNotExist:
+        return HttpResponse('Error, aprendiz no existe')
+    except IntegrityError:
+        return HttpResponse('Error, no se puede eliminar este aprendiz porque está relacionado con otros datos.')
+    except Exception as e:
+        return HttpResponse(f'Error: {e}')
+
+def editarAprendiz(request, id):
+    a = Aprendiz.objects.get(pk = id)
+    contexto = {"datos": a}
+    return render(request, 'territorio/aprendiz/editar_aprendiz.html', contexto)
+
+def actualizarAprendiz(request):
+    try:
+        if request.method == "POST":
+            a = Aprendiz.objects.get(pk = request.POST["id"])
+            a.cedula = request.POST["cedula"]
+            a.nombre = request.POST["nombre"]
+            a.apellido = request.POST["apellido"]
+            a.fecha_nacimiento = request.POST["fecha_nacimiento"]
+
+            a.save()
+
+            messages.success(request, "Aprendiz actualizado con éxito")
+            return redirect('territorio:aprendiz')
+        else:
+            messages.warning(request, "No hay cambios")
+            return redirect('territorio:aprendiz')
+    except Exception as e:
+        messages.error(request, "Error: " + str(e))
+        return redirect('territorio:aprendiz')
+
+#----------------------------------------------------------------------------------------------------------------------------------
 def listarMonitorias(request):
     m = Monitorias.objects.all()
     contexto = {'datos': m}
@@ -54,7 +100,12 @@ def guardarMonitoria(request):
         return HttpResponseRedirect(reverse('territorio:monitorias'))
     except Exception as e:
         return HttpResponse("Error" + str(e))
-    
+
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------------
 def listarActividades(request):
     a = Actividades.objects.all()
     contexto = {'datos': a}

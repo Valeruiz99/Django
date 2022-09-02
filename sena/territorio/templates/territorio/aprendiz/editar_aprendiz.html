@@ -1,0 +1,25 @@
+{% extends 'territorio/base.html' %}
+{% block body %}
+<h1>Editar Aprendiz ( {{ datos.nombre }} )</h1>
+
+<form action="{% url 'territorio:aprendiz-actualizar' %}" method="post">
+    {% csrf_token %}
+
+    <input type="hidden" name="id" value="{{ datos.id }}">
+
+    <label for="cedula">Cédula</label>
+    <input  class="form-control" type="number" name="cedula" value="{{ datos.cedula }}"><br>
+    
+    <label for="nombre">Nombre</label>
+    <input class="form-control" type="text" name="nombre" value="{{ datos.nombre }}"><br>
+    
+    <label for="apellido">Apellido</label>
+    <input class="form-control" type="text" name="apellido" value="{{ datos.apellido }}"><br>
+    
+    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+    <input class="form-control" type="date" name="fecha_nacimiento" value="{{ datos.fecha_nacimiento|date:'Y-m-d' }}"><br>
+    
+    <button class="btn btn-primary" type="submit">Editar</button>
+</form>
+
+{% endblock %}

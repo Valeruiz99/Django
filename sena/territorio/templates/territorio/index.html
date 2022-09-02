@@ -1,79 +1,8 @@
+{% extends "territorio/base.html" %}
 {% load static %}
-<!--Esto lo que hace es permitir traer los archivos de static-->
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Territorio</title>
-    <!--Bootstrap 5.2-->
-    <link rel="stylesheet" href="{% static 'territorio/css/bootstrap.min.css' %}">
-    <!--Favicon-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'territorio/favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'territorio/favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'territorio/favicon/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'territorio/favicon/site.webmanifest' %}">
-    <!--CSS-->
-    <link rel="stylesheet" href="{% static 'territorio/css/territorio.css' %}">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="nav-link active" aria-current="page" href="{% url 'territorio:index' %}">Territorio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'territorio:index' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'territorio:aprendiz' %}">Aprendices</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'territorio:monitorias' %}">Monitorias</a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'territorio:actividades' %}">Actividades</a>
-
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
+{% block body %}
     <h1>Bienvenido a Territorio</h1>
-
-    <script src="{% static 'territorio/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'territorio/js/funciones.js' %}"></script>
-</body>
-
-</html>
+    <img src="{% static 'territorio/img/territorio.jpg' %}" alt="">
+{% endblock %}
+   

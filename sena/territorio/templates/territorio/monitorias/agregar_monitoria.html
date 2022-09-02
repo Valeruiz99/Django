@@ -1,3 +1,6 @@
+{% extends "territorio/base.html" %}
+
+{% block body %}
 <h1>Agregar una nueva monitoría</h1>
 
 <form action="{% url 'territorio:monitorias-guardar' %}" method="post">
@@ -16,5 +19,5 @@
         <label for="fechaFinal">Fecha final</label>
         <input type="datetime-local" name="fechaFinal"><br>
         <br><button type="submit">Agregar</button>
-
 </form>
+{% endblock %}

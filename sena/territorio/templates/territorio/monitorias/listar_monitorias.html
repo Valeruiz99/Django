@@ -1,5 +1,8 @@
+{% extends "territorio/base.html" %}
+{% block body %}
+
 <h1>Monitorías</h1>
-<a href="{% url 'territorio:monitorias-add' %}">Agregar monitoría</a>
+<!--<a href="{% url 'territorio:monitorias-add' %}">Agregar monitoría</a>-->
 {% if datos %}
 <table border="1" width="100%">
     <thead>
@@ -26,3 +29,5 @@
 {% else %}
     <h1>No hay datos</h1>
 {% endif %}
+
+{% endblock %}

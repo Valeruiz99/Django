@@ -1,3 +1,6 @@
+{% extends "territorio/base.html" %}
+{% block body %}
+
 <h1>Agregar una nueva actividad</h1>
 
 <form action="{% url 'territorio:actividades-guardar' %}" method="post">
@@ -19,3 +22,4 @@
         <br><button type="submit">Agregar</button>
 
 </form>
+{% endblock %}
